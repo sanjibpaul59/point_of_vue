@@ -1,6 +1,6 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <nav class="bg-green-600 pb-2">
+  <nav class="bg-green-600 pb-2 md:container">
     <div class="max-w-7xl mx-aupx-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div
@@ -17,17 +17,21 @@
               >
                 {{ page.title }}
               </router-link>
+
               <button
-                class="text-gray-900 hover:bg-gray-700 hover:text-white p-2 rounded-md text-lg font-semibold focus:outline-none"
-                @click="$emit('open-login-modal')"
-              >
-                Login
-              </button>
-              <button
+                v-if="isLoggedIn"
                 class="text-gray-900 hover:bg-gray-700 hover:text-white p-2 rounded-md text-lg font-semibold focus:outline-none"
                 @click="logout"
               >
                 Logout
+              </button>
+
+              <button
+                v-else
+                class="text-gray-900 hover:bg-gray-700 hover:text-white p-2 rounded-md text-lg font-semibold focus:outline-none"
+                @click="$emit('open-login-modal')"
+              >
+                Login
               </button>
             </div>
           </div>
@@ -38,25 +42,28 @@
 </template>
 
 <script>
-import firebase from "../utilities/firebase";
+import firebase from '../utilities/firebase';
 export default {
+  props: {
+    isLoggedIn: Boolean,
+  },
   data: () => ({
     pageList: [
       {
-        title: "Favourite Songs",
-        to: "/play-list",
+        title: 'Favourite Songs',
+        to: '/play-list',
       },
       {
-        title: "Calendar",
-        to: "/calendar",
+        title: 'Calendar',
+        to: '/calendar',
       },
       {
-        title: "Markdown",
-        to: "/markdown",
+        title: 'Markdown',
+        to: '/markdown',
       },
       {
-        title: "Slider",
-        to: "/slider",
+        title: 'Slider',
+        to: '/slider',
       },
       // {
       //   title:'Calculator',
@@ -97,5 +104,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

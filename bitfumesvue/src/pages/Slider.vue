@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-wrap relative">
+  <div class="overflow-hidden w-full flex flex-wrap relative md:container">
     <div
     class="w-full absolute"
     v-for="(slide,index) in slides" :key="slide" >
@@ -7,12 +7,12 @@
      <div 
       v-if="currentSlide == index" 
       :class="slide"
-      style="height:350px;">
+      style="height:360px;">
      </div>
      </transition>
   </div>
 
-  <div class="w-full" style="height:340px">
+  <div class="w-full" style="height:360px">
     <div class="absolute bottom-0 w-full flex justify-center">
       <div
        v-for="(slider,index) in slides" 
@@ -53,7 +53,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active{
-  transition: all 2s ease;
+  transition: all 1s ease;
 }
 
 .fade-enter-from{

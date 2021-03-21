@@ -8,6 +8,7 @@
       <div class="z-20 m-auto bg-white p-4 shadow-md rounded w-1/3">
         <div class="p-2 border">
           <h1 class="text-center text-2xl font-semibold">Login</h1>
+          <Google @close-google-login="closeModal"/>
           <form class="p-2 my-1" @submit.prevent="submit">
             <div class="my-4">
               <label for="mail">Email or UserName</label>
@@ -47,7 +48,10 @@
 
 <script>
 import firebase from "../utilities/firebase";
+import Google from './Login/Google';
+
 export default {
+  components: {Google},
   data() {
     return {
       form: {
@@ -80,10 +84,11 @@ export default {
     closeModal() {
       this.$emit("close-login-modal");
     },
+
   },
-  mounted(){
-      this.$refs.emailAddress.focus();
-  }
+  mounted() {
+    this.$refs.emailAddress.focus();
+  },
 };
 </script>
 
