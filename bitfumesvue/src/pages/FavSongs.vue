@@ -12,23 +12,23 @@
       >
         {{ song.name }} -- {{ song.artist }}
         &nbsp;
-        <span
-          ><button
+        <span>
+          <button
             class="hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-900 focus:ring-opacity-25"
             @click="removeSong(song.name)"
           >
             &times;
-          </button></span
-        >
+          </button>
+        </span>
       </li>
     </ul>
 
     <form @submit.prevent="addSong" class="mt-2 p-3">
       <input
-        ref="songName"
+        ref="songNameRef"
         class="focus:text-purple-900 focus:outline-none focus:ring-1 border rounded-md"
         placeholder="Add New Song"
-        v-model="newSong.name"
+        v-model.trim="newSong.name"
       />
       &nbsp;
       <input
@@ -48,42 +48,45 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue';
+
 export default {
-  data: () => ({
-    title: "Songs",
-    favSongs: [
+  setup() {
+    const songNameRef = ref('');
+    const favSongs = ref([
       {
-        name: "Scientist",
-        artist: "Coldplay",
+        name: 'Scientist',
+        artist: 'Coldplay',
       },
       {
-        name: "Introspection",
-        artist: "Estas Tonne",
+        name: 'Introspection',
+        artist: 'Estas Tonne',
       },
-    ],
-    list: [1, 2, 3, 4],
-    newSong: {
-      name: "",
-      artist: "",
-    },
-  }),
-  methods: {
-    addSong() {
-      if (this.newSong.name && this.newSong.artist) {
-        this.favSongs.push({
-          name: this.newSong.name,
-          artist: this.newSong.artist,
+    ]);
+    const title = ref('Songs');
+    const list = ref([1, 2, 3, 4]);
+    const newSong = ref({
+      name: '',
+      artist: '',
+    });
+    function removeSong(songName) {
+      favSongs.value = favSongs.value.filter((item) => item.name != songName);
+    }
+    function addSong() {
+      if (newSong.value.name && newSong.value.artist) {
+        favSongs.value.push({
+          name: newSong.value.name,
+          artist: newSong.value.artist,
         });
-        this.newSong.name = "";
-        this.newSong.artist = "";
+        newSong.value.name = '';
+        newSong.value.artist = '';
       }
-    },
-    removeSong(songName) {
-      this.favSongs = this.favSongs.filter((item) => item.name != songName);
-    },
+    }
+    onMounted(() => {
+      songNameRef.value.focus();
+    });
+
+    return { title, favSongs, list, newSong, addSong, removeSong, songNameRef };
   },
-  mounted(){
-    this.$refs.songName.focus();
-  }
 };
 </script>

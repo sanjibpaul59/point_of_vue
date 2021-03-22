@@ -65,10 +65,10 @@ export default {
         title: 'Slider',
         to: '/slider',
       },
-      // {
-      //   title:'Calculator',
-      //   to:"/calculator"
-      // },
+      {
+        title:'Calculator',
+        to:"/calculator"
+      },
       // {
       //   title:'Modals',
       //   to:"/modals"
