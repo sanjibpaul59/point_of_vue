@@ -69,10 +69,10 @@ export default {
         title:'Calculator',
         to:"/calculator"
       },
-      // {
-      //   title:'Modals',
-      //   to:"/modals"
-      // },
+      {
+        title:'Modals',
+        to:"/reusableModals"
+      },
       // {
       //   title:'Chat',
       //   to:"/chat"

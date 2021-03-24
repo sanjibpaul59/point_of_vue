@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 export default {
   setup() {
@@ -189,7 +189,9 @@ export default {
       }
     }
     function appendNumber(value) {
-      currentNum.value = currentNum.value + value;
+      if(!currentNum.value){
+        currentNum.value = currentNum.value + value;
+      }
       calculation.value = calculation.value + value;
     }
     function calculate() {
@@ -207,34 +209,23 @@ export default {
       }
     }
     function operate(value) {
-      calculate();
       prevNum.value = currentNum.value;
       currentNum.value = "";
       operand.value = value;
+      calculate();
       calculation.value = prevNum.value + operand.value;
     }
 
-    function add() {
-      console.log("current ", currentNum.value);
-      console.log("prev ", prevNum.value);
-      console.log("operand ", operand.value);
-      result.value = Number(prevNum.value) + Number(currentNum.value);
-    }
-    function subtract() {
-      result.value = prevNum.value - currentNum.value;
-    }
-    function multiply() {
-      result.value = prevNum.value * currentNum.value;
-    }
-    function divide() {
-      result.value = prevNum.value / currentNum.value;
-    }
-    function percent() {
-      result.value = prevNum.value * (currentNum.value / 100);
-    }
-
+    const add = ()=> result.value = Number(prevNum.value) + Number(currentNum.value);
+                     currentNum.value = result.value;
+    const subtract = ()=> result.value = prevNum.value - currentNum.value;
+    const multiply = ()=> result.value = prevNum.value * currentNum.value;
+    const divide = ()=> result.value = prevNum.value / currentNum.value;
+    const percent = ()=> result.value = prevNum.value * (currentNum.value / 100);
+    
     function subOperation(value) {
       if (value === "ac") {
+        prevNum.value = "";
         currentNum.value = "";
         calculation.value = "";
         result.value = "";
@@ -245,11 +236,9 @@ export default {
       }
     }
 
-    onMounted(() => {
-      window.addEventListener("keydown", (e) => {
-        btnPressed(e.key);
-      });
-    });
+    const handleKeyDown = (e)=> btnPressed(e.key);
+    onMounted(() => window.addEventListener("keydown",handleKeyDown));
+    onUnmounted(()=> window.removeEventListener('keydown', handleKeyDown));
 
     return {
       calculation,
