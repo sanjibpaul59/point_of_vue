@@ -162,7 +162,8 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref } from "vue";
+import { ref } from "vue";
+import useWindowEvent from '../utilities/composition/useWindowEvent'
 
 export default {
   setup() {
@@ -237,9 +238,7 @@ export default {
     }
 
     const handleKeyDown = (e)=> btnPressed(e.key);
-    onMounted(() => window.addEventListener("keydown",handleKeyDown));
-    onUnmounted(()=> window.removeEventListener('keydown', handleKeyDown));
-
+    useWindowEvent('keydown',handleKeyDown);
     return {
       calculation,
       currentNum,

@@ -1,10 +1,10 @@
 <template>
-  <Header :isLoggedIn="isLoggedIn" @open-login-modal="isLoginOpen = true" />
+  <Header />
   <div class="w-full flex">
     <router-view></router-view>
   </div>
 
-  <LoginModal v-if="isLoginOpen" @close-login-modal="isLoginOpen = false" />
+  <LoginModal  />
 </template>
 
 <script>
@@ -13,13 +13,6 @@ import LoginModal from "./components/LoginModal";
 import firebase from "./utilities/firebase";
 
 export default {
-  data() {
-    return {
-      isLoginOpen: false,
-      isLoggedIn: false,
-      authUser: {},
-    };
-  },
   components: {
     Header,
     LoginModal,
@@ -27,17 +20,16 @@ export default {
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.isLoggedIn = true;
-        this.authUser = user;
+        this.$store.commit("setIsLoggedIn", true);
+        this.$store.commit("setAuthUser", user);
         // User is signed in.
       } else {
-        this.isLoggedIn = false;
-        this.authUser = {};
+        this.$store.commit("setIsLoggedIn", false);
+        this.$store.commit("setAuthUser", {});
+
         // No user is signed in.
       }
     });
   },
 };
 </script>
-
-FavSongs

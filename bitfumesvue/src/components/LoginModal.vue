@@ -1,4 +1,5 @@
 <template>
+<div v-if="isLoginOpen">
   <section
     @click="closeModal"
     class="z-10 h-screen w-screen fixed top-0 opacity-60 bg-gray-700"
@@ -44,6 +45,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -52,6 +54,11 @@ import Google from './Login/Google';
 
 export default {
   components: {Google},
+  computed: {
+    isLoginOpen (){
+      return this.$store.state.isLoginOpen;
+    }
+  },
   data() {
     return {
       form: {
@@ -82,12 +89,11 @@ export default {
         });
     },
     closeModal() {
-      this.$emit("close-login-modal");
+      this.$store.commit("setLoginModal", false);
     },
-
   },
   mounted() {
-    this.$refs.emailAddress.focus();
+    // this.$refs.emailAddress.focus();
   },
 };
 </script>

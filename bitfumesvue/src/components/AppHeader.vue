@@ -29,7 +29,7 @@
               <button
                 v-else
                 class="text-gray-900 hover:bg-gray-700 hover:text-white p-2 rounded-md text-lg font-semibold focus:outline-none"
-                @click="$emit('open-login-modal')"
+                @click="openLoginModal"
               >
                 Login
               </button>
@@ -42,49 +42,46 @@
 </template>
 
 <script>
-import firebase from '../utilities/firebase';
+import firebase from "../utilities/firebase";
 export default {
-  props: {
-    isLoggedIn: Boolean,
-  },
   data: () => ({
     pageList: [
       {
-        title: 'Favourite Songs',
-        to: '/play-list',
+        title: "Favourite Songs",
+        to: "/play-list",
       },
       {
-        title: 'Calendar',
-        to: '/calendar',
+        title: "Calendar",
+        to: "/calendar",
       },
       {
-        title: 'Markdown',
-        to: '/markdown',
+        title: "Markdown",
+        to: "/markdown",
       },
       {
-        title: 'Slider',
-        to: '/slider',
+        title: "Slider",
+        to: "/slider",
       },
       {
-        title:'Calculator',
-        to:"/calculator"
+        title: "Calculator",
+        to: "/calculator",
       },
       {
-        title:'Modals',
-        to:"/reusableModals"
+        title: "Modals",
+        to: "/reusableModals",
       },
-      // {
-      //   title:'Chat',
-      //   to:"/chat"
-      // },
-      // {
-      //   title:'CRUD',
-      //   to:"/user-crud"
-      // },
-      // {
-      //   title:'Tensorflow',
-      //   to:"/tensorflow"
-      // },
+      {
+        title:'Chat',
+        to:"/chatting"
+      },
+      {
+        title:'User CRUD',
+        to:"/user-crud"
+      },
+      {
+        title:'Tensorflow',
+        to:"/tensorflow"
+      },
     ],
   }),
   methods: {
@@ -100,7 +97,15 @@ export default {
           console.log(error);
         });
     },
+    openLoginModal(){
+      this.$store.commit("setLoginModal", true);
+    }
   },
+  computed:{
+    isLoggedIn(){
+      return this.$store.state.isLoggedIn;
+    }
+  }
 };
 </script>
 

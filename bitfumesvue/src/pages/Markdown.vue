@@ -23,12 +23,12 @@
 
 <script>
 import marked from "marked";
-import debounce from "../utilities/composition/useDebounce";
+import useDebounce from '../utilities/composition/useDebounce';
 export default {
-  mixins: [debounce],
   data() {
-    return {
+    return { 
       text: "",
+      debounce: "",
     };
   },
   computed: {
@@ -39,10 +39,11 @@ export default {
   methods: {
     update(e) {
       const task = () => (this.text = e.target.value);
-      this.debounce(task, 500);
+      this.debounce(task, 1000);
     },
   },
   mounted(){
+    this.debounce = useDebounce();
       this.$refs.inputArea.focus();
   }
 };
